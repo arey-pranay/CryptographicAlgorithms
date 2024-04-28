@@ -1,0 +1,28 @@
+//Generate KeyPair, pass pr to sign, pass pu to verify
+//Signature.getInstance("SHA256withDSA") dsa.initSign(pr) dsa.update(data) return dsa.sign()
+//Signature.getInstance("SHA256withDSA") dsa.initVerify(pu) dsa.update(data) return dsa.verify(signature)
+import java.security.*;
+public class DSA{
+  public static void main(String[] args) throws  Exception{
+    byte[] data = "HelloWorld".getBytes();
+    KeyPair pair = KeyPairGenerator.getInstance("DSA").generateKeyPair();
+    PublicKey pu = pair.getPublic();
+    PrivateKey pr = pair.getPrivate();
+    byte[] signature = sign(data,pr);
+    boolean verified = verify(data,pu,signature);
+    System.out.println("Signature: " + new String(signature));
+    System.out.println("Verified: " + verified);
+  }
+  public static byte[] sign(byte[] data, PrivateKey pr)throws Exception{
+    Signature s = Signature.getInstance("SHA256withDSA");
+    s.initSign(pr);
+    s.update(data);
+    return s.sign();
+  }
+  public static boolean verify(byte[] data, PublicKey pu, byte[] signature)throws Exception{
+    Signature s = Signature.getInstance("SHA256withDSA");
+    s.initVerify(pu);
+    s.update(data);
+    return s.verify(signature);
+  }
+}
