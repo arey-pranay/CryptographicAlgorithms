@@ -1,5 +1,5 @@
 //pair of keys generations
-//same as 
+//same as RC4 except the key generation pair thing..
 import java.security.*;
 import javax.crypto.*;
 
